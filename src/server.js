@@ -25,36 +25,33 @@ const parseBody = (request, response, handler) => {
   });
 };
 
-const handlePost = (reqeuest, response, parsedUrl) => {
-    if (parsedUrl.pathname == '/addUser') {
-        parseBody(request, response, jsonHandler.addUder);
-    }
+const handlePost = (request, response, parsedUrl) => {
+  if (parsedUrl.pathname === '/addUser') {
+    parseBody(request, response, jsonHandler.addUder);
+  }
 };
 
 const handleGet = (request, response, parsedUrl) => {
-    if(parsedUrl.pathname == '/style.css') {
-        htmlHandler.getCSS(request, response);
-    }
-    else if (parsedUrl.pathname == '/getUsers') {
-        jsonHandler.getUsers(request, response);
-    }
-    else {
-        htmlHandler.getIndex(request, response);
-    }
+  if (parsedUrl.pathname === '/style.css') {
+    htmlHandler.getCSS(request, response);
+  } else if (parsedUrl.pathname === '/getUsers') {
+    jsonHandler.getUsers(request, response);
+  } else {
+    htmlHandler.getIndex(request, response);
+  }
 };
 
 const onRequest = (request, response) => {
-    const protocol = request.connection.encrypted ? 'https' : 'http';
-    const parsedUrl = new URL(request.url, `${protocol}://${request.headers.host}`);
+  const protocol = request.connection.encrypted ? 'https' : 'http';
+  const parsedUrl = new URL(request.url, `${protocol}://${request.headers.host}`);
 
-    if (request.method == 'POST') {
-        handlePost(request, response, parsedUrl);
-    }
-    else {
-        handleGet(request, response, parsedUrl);
-    }
+  if (request.method === 'POST') {
+    handlePost(request, response, parsedUrl);
+  } else {
+    handleGet(request, response, parsedUrl);
+  }
 };
 
 http.createServer(onRequest).listen(port, () => {
-    console.log(`Listening on 127.0.0.1:${port}`);
+  console.log(`Listening on 127.0.0.1:${port}`);
 });
