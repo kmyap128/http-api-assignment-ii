@@ -27,7 +27,7 @@ const parseBody = (request, response, handler) => {
 
 const handlePost = (request, response, parsedUrl) => {
   if (parsedUrl.pathname === '/addUser') {
-    parseBody(request, response, jsonHandler.addUder);
+    parseBody(request, response, jsonHandler.addUser);
   }
 };
 
