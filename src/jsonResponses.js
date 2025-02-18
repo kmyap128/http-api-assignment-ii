@@ -14,43 +14,43 @@ const respondJSON = (request, response, status, object) => {
 };
 
 const getUsers = (request, response) => {
-    const responseJSON = {
-        users,
-    };
-    respondJSON(request, response, 200, responseJSON);
+  const responseJSON = {
+    users,
+  };
+  respondJSON(request, response, 200, responseJSON);
 };
 
 const addUser = (request, response) => {
-    const responseJSON = {
-        message: 'Name and age are both required.',
+  const responseJSON = {
+    message: 'Name and age are both required.',
+  };
+
+  const { name, age } = request.body;
+
+  if (!name || !age) {
+    responseJSON.id = 'missingParams';
+    return respondJSON(request, response, 400, responseJSON);
+  }
+
+  let responseCode = 204;
+
+  if (!users[name]) {
+    responseCode = 201;
+    users[name] = {
+      name,
     };
+  }
+  users[name].age = age;
 
-    const { name, age } = request.body;
+  if (responseCode === 201) {
+    responseJSON.message = 'Created Successfully';
+    return respondJSON(request, response, responseCode, respondJSON);
+  }
 
-    if (!name || !age) {
-        responseJSON.id = 'missingParams';
-        return respondJSON(request, response, 400, responseJSON);
-    }
-
-    let responseCode = 204;
-
-    if (!users[name]) {
-        responseCode = 201;
-        users[name] = {
-            name: name,
-        };
-    }
-    users[name].age = age;
-
-    if (responseCode === 201) {
-        responseJSON.message = 'Created Successfully';
-        return respondJSON(request, response, responseCode, respondJSON);
-    }
-
-    return respondJSON(request, response, responseCode, {});
+  return respondJSON(request, response, responseCode, {});
 };
 
 module.exports = {
-    getUsers,
-    addUser,
+  getUsers,
+  addUser,
 };
