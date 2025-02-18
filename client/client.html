@@ -23,18 +23,19 @@
           break;
         case 404: 
           content.innerHTML = `<b>Not Found</b>`;
-        default:contentcontent.innerHTML = `Error code not implemented by client`;
+          break;
+        default:content.innerHTML = `Error code not implemented by client`;
       }
 
-      const obj = await response.json();
-
-      if(parseResponse) {
-        let jsonString = JSON.stringify(obj);
-        content.innerHTML += `<p>${jsonString}</p>`;
+      if (response.status === 204 || parseResponse){
+        return;
       }
-
-      if(obj.message) {
-        content.innerHTML += `<p>${obj.message}</p>`;
+      else {
+        let obj = await response.json();
+        console.log(obj);
+        if (obj.message) {
+          content.innerHTML += `<p>${obj.message}</p>`;
+        }
       }
     };
 
@@ -48,7 +49,7 @@
           'Accept': 'application/json'
         },
       });
-      handleResponse(response, method == 'GET');
+      handleResponse(response, method === 'head');
     }
 
     const sendPost = async (nameForm) => {

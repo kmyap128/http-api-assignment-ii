@@ -14,8 +14,9 @@ const respondJSON = (request, response, status, object) => {
 };
 
 const getUsers = (request, response) => {
+  let stringUsers = JSON.stringify(users);
   const responseJSON = {
-    users,
+    message: stringUsers,
   };
   respondJSON(request, response, 200, responseJSON);
 };
@@ -42,15 +43,23 @@ const addUser = (request, response) => {
   }
   users[name].age = age;
 
-  if (responseCode === 201) {
+  if (responseCode == 201) {
     responseJSON.message = 'Created Successfully';
-    return respondJSON(request, response, responseCode, respondJSON);
+    return respondJSON(request, response, responseCode, responseJSON);
   }
 
   return respondJSON(request, response, responseCode, {});
 };
 
+const notReal = (request, response) => {
+  const responseJSON = {
+    message: 'The page you are looking for was not found.',
+  };
+  respondJSON(request, response, 404, responseJSON);
+};
+
 module.exports = {
   getUsers,
   addUser,
+  notReal,
 };

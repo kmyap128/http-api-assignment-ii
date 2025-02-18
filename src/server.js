@@ -34,9 +34,14 @@ const handlePost = (request, response, parsedUrl) => {
 const handleGet = (request, response, parsedUrl) => {
   if (parsedUrl.pathname === '/style.css') {
     htmlHandler.getCSS(request, response);
-  } else if (parsedUrl.pathname === '/getUsers') {
+  } 
+  else if (parsedUrl.pathname === '/getUsers') {
     jsonHandler.getUsers(request, response);
-  } else {
+  } 
+  else if (parsedUrl.pathname === '/notReal') {
+    jsonHandler.notReal(request, response);
+  }
+  else {
     htmlHandler.getIndex(request, response);
   }
 };
